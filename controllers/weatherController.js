@@ -1,17 +1,12 @@
+const weatherModel = require('../models/weatherModel');
 module.exports = {
-    getLocation (){
-        return {
-            location: {x:'a',y:'aa'}
-        };
+    getLocation(req, res) {
+        return weatherModel.getWeatherLocation(req, res);
     },
-    getSpecificCity(city){
-        return {
-            location: "sarasa",
-        }
+    getSpecificCity(city) {
+        return weatherModel.getSpecificCity(req, res);
     },
-    getForecastCity(city){
-        return {
-            location: "sarasados",
-        }
+    getForecastCity(city) {
+        return weatherModel.getForecastCity(req, res);
     },
 }
