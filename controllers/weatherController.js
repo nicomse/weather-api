@@ -3,10 +3,10 @@ module.exports = {
     getLocation(req, res) {
         return weatherModel.getWeatherLocation(req, res);
     },
-    getSpecificCity(city) {
+    getSpecificCity(req, res) {
         return weatherModel.getSpecificCity(req, res);
     },
-    getForecastCity(city) {
+    getForecastCity(req, res) {
         return weatherModel.getForecastCity(req, res);
     },
 }
