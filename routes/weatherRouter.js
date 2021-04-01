@@ -3,11 +3,7 @@ const router = express.Router();
 const weatherController = require('../controllers/weatherController');
 
 router.get('/location', weatherController.getLocation);
-router.get('/current', weatherController.getSpecificCity);
-router.get('/forecast/:city', (req, res) => {
-    res.json('login', {
-        title: req.params.city
-    });
-});
+router.get('/current/:city?', weatherController.getSpecificCity);
+router.get('/forecast/:city?', weatherController.getForecastCity);
 
 module.exports = router;
