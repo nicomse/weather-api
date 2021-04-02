@@ -24,25 +24,22 @@ module.exports = {
             city = latLong.city
         }
         const weather = await this.getActualWeatherByCityName(city);
-        const weatherDescription =  weather.weather.map(w=>{
-            console.log(w)
-            return {
-                weather_description: w.description,
-            }
-        });
-        const weatherParsed = {
-            datetime: weather.dt,
-            temp: weather.main.temp,
-            feels_like: weather.main.feels_like,
-            temp_min: weather.main.temp_min,
-            temp_max: weather.main.temp_max,
-            humidity: weather.main.humidity,
-            weather_description: weatherDescription,
-            wind_speed: weather.wind.speed,
-        }
-        console.log(weather);
-        console.log('weather parsed', weatherParsed)
         if (weather != null && weather.cod === 200) {
+            const weatherDescription =  weather.weather.map(w=>{
+                return {
+                    weather_description: w.description,
+                }
+            });
+            const weatherParsed = {
+                datetime: weather.dt,
+                temp: weather.main.temp,
+                feels_like: weather.main.feels_like,
+                temp_min: weather.main.temp_min,
+                temp_max: weather.main.temp_max,
+                humidity: weather.main.humidity,
+                weather_description: weatherDescription,
+                wind_speed: weather.wind.speed,
+            }
             return res.status(200).send(
                 {
                     'location': city,
@@ -89,7 +86,7 @@ module.exports = {
         }
     },
     async getLatLong(ipAddress) {
-        const url = 'http://api.ipstack.com/' + '8.8.8.8' + '?access_key=' + process.env.IPSTACK_APIKEY;
+        const url = process.env.IPSTACK_HOST + '/' + '8.8.8.8' + '?access_key=' + process.env.IPSTACK_APIKEY;
         try {
             const response = await axios.get(url);
             return response.data;
@@ -103,7 +100,8 @@ module.exports = {
             const response = await axios.get(url);
             return response.data;
         } catch (error) {
-            throw error;
+            return error;
+            
         }
     },
     async getForecastByCityName(cityName) {
@@ -112,7 +110,7 @@ module.exports = {
             const response = await axios.get(url);
             return response.data;
         } catch (error) {
-            throw error;
+            return error;
         }
     }
 };
