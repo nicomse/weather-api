@@ -32,7 +32,7 @@ describe('/GET specificCity', () => {
         }
       });
   });
-  it('it should return via GET an error', (done) => {
+  it('it should return via GET an error sending a wrong location', (done) => {
     chai.request(app)
       .get('/v1/current/aaa')
       .end((err, res) => {
