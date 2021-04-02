@@ -14,8 +14,6 @@ module.exports = {
         }
     },
     async getSpecificCity(req, res) {
-    // City es un parámetro opcional. Devuelve los datos de ubicación city o la ubicación actual según
-    //ip-api y el estado del tiempo actual.
         let city;
         if (req.params.city) {
             city = req.params.city;
@@ -52,8 +50,6 @@ module.exports = {
         })
     },
     async getForecastCity(req,res) {
-    //City es un parámetro opcional. Devuelve los datos de ubicación city o la ubicación actual según
-    //ip-api y el estado del tiempo a 5 días
         let city;
         if (req.params.city) {
             city = req.params.city;
@@ -86,16 +82,18 @@ module.exports = {
         }
     },
     async getLatLong(ipAddress) {
-        const url = process.env.IPSTACK_HOST + '/' + '8.8.8.8' + '?access_key=' + process.env.IPSTACK_APIKEY;
+        const url = process.env.IPSTACK_HOST + '/' + ipAddress + '?access_key=' + process.env.IPSTACK_APIKEY;
         try {
             const response = await axios.get(url);
             return response.data;
         } catch (error) {
-            throw error;
+            return error;
         }
     },
     async getActualWeatherByCityName(cityName) {
-        const url = `${process.env.WEATHER_HOST}/weather?q=${cityName}&appid=${process.env.WEATHER_APIKEY}&units=metric&lang=es`
+        const units = 'metric';
+        const lang = 'es';
+        const url = `${process.env.WEATHER_HOST}/weather?q=${cityName}&appid=${process.env.WEATHER_APIKEY}&units=${units}&lang=${lang}`
         try {
             const response = await axios.get(url);
             return response.data;
@@ -105,7 +103,10 @@ module.exports = {
         }
     },
     async getForecastByCityName(cityName) {
-        const url = `${process.env.WEATHER_HOST}/forecast?q=${cityName}&appid=${process.env.WEATHER_APIKEY}&units=metric&lang=es`
+        const units = 'metric';
+        const lang = 'es';
+        const count = 5;
+        const url = `${process.env.WEATHER_HOST}/forecast?q=${cityName}&appid=${process.env.WEATHER_APIKEY}&units=${units}&lang=${lang}&cnt=${count}`
         try {
             const response = await axios.get(url);
             return response.data;
