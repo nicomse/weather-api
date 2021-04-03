@@ -12,6 +12,3 @@ npm run dev
 npm run test
 ```
 
-
-## License
-[MIT](https://choosealicense.com/licenses/mit/)
